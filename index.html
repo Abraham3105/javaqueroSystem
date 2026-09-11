@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Javaquero — Café de Especialidad</title>
+<link rel="icon" href="favicon.ico"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="js/tailwind-config.js"></script>
+</head>
+<body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen">
+
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+  <div class="h-16 px-space-md md:px-space-xl md:max-w-6xl md:mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-space-xs">
+      <img alt="Javaquero" class="w-8 h-8 rounded-full object-cover bg-surface-container-lowest" src="img/logo.png"/>
+      <div class="flex flex-col">
+        <span class="font-headline-sm text-headline-sm tracking-wide text-primary uppercase leading-tight">Javaquero</span>
+        <span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant uppercase md:hidden" id="header-subtitle">Inicio</span>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-space-xl">
+      <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-primary" data-path="inicio" href="#inicio">Inicio</a>
+      <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="cafes" href="#cafes">Cafés</a>
+      <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="nosotros" href="#nosotros">Nosotros</a>
+      <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="contacto" href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen">
+<div class="flex flex-col w-full text-on-surface">
+
+  <!-- HERO SECTION -->
+  <section class="relative w-full h-[560px] md:h-[640px] overflow-hidden" id="inicio">
+    <img alt="JAVAQUERO Espresso artesanal con crema dorada" class="absolute inset-0 w-full h-full object-cover object-center" src="img/hero-espresso.jpg"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/70 to-surface/20"></div>
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 h-full w-full px-space-md pb-space-2xl md:px-space-xl md:pb-space-3xl md:max-w-6xl md:mx-auto flex flex-col items-center justify-end text-center md:items-start md:text-left">
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface font-semibold max-w-sm md:max-w-lg mb-space-sm leading-tight">
+        Nobleza, Pasión y <span class="text-primary italic">Tueste Perfecto</span>
+      </h1>
+      <p class="font-body-md text-body-md md:font-body-lg md:text-body-lg text-on-surface-variant max-w-xs md:max-w-md mb-space-lg">
+        Microlotes de estricta altura seleccionados grano a grano. Tostados artesanalmente en pequeños lotes para revelar notas sensoriales inolvidables.
+      </p>
+
+      <div class="w-full flex flex-col gap-space-sm max-w-xs">
+        <a class="w-full py-3.5 px-space-md rounded-full bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_24px_rgba(242,202,80,0.3)] active:scale-98 transition-all" href="#cafes">
+          <span>Ver Cafés Disponibles</span>
+          <span class="material-symbols-outlined text-lg">arrow_downward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER NOTA PEDIDOS DIRECTOS -->
+  <div class="mx-space-md mb-space-2xl px-space-md py-space-sm md:max-w-6xl md:mx-auto rounded-xl bg-surface-container flex items-center gap-space-sm shadow-md">
+    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-primary text-xl">loyalty</span>
+    </div>
+    <div class="flex flex-col text-left">
+      <span class="font-title-md text-title-md text-primary leading-tight">Atención 100% Personalizada</span>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">Sin carritos automáticos ni intermediarios. Cada pedido se agenda y tuesta directo a través de WhatsApp.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: PRODUCTOS (#cafes) -->
+  <section class="px-space-md py-space-xl md:max-w-6xl md:mx-auto md:px-space-xl md:py-space-2xl flex flex-col scroll-mt-20" id="cafes">
+    <div class="flex flex-col items-start mb-space-lg">
+      <div class="flex items-center gap-space-2xs mb-space-2xs">
+        <span class="material-symbols-outlined text-primary text-sm">coffee</span>
+        <span class="font-label-md text-label-md uppercase tracking-widest text-primary">Colección Reservada</span>
+      </div>
+      <h2 class="font-headline-sm text-headline-sm md:font-headline-md md:text-headline-md text-on-surface font-semibold">
+        Nuestra Selección de Temporada
+      </h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+        Microlotes de pureza excepcional listos para molerse a tu gusto y ser enviados a tu puerta.
+      </p>
+    </div>
+
+    <!-- Las tarjetas de producto se generan dinámicamente desde js/products.js -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg w-full" id="products-list"></div>
+  </section>
+
+  <!-- SECTION: SOBRE NOSOTROS (#nosotros) -->
+  <section class="px-space-md py-space-2xl bg-surface-container-low flex flex-col scroll-mt-20" id="nosotros">
+   <div class="w-full md:max-w-6xl md:mx-auto md:grid md:grid-cols-2 md:gap-space-2xl md:items-start">
+    <div>
+    <div class="flex flex-col items-start mb-space-lg">
+      <div class="flex items-center gap-space-2xs mb-space-2xs">
+        <span class="material-symbols-outlined text-primary text-sm">history_edu</span>
+        <span class="font-label-md text-label-md uppercase tracking-widest text-primary">Nuestra Esencia</span>
+      </div>
+      <h2 class="font-headline-sm text-headline-sm md:font-headline-md md:text-headline-md text-on-surface font-semibold">
+        La Historia de JAVAQUERO
+      </h2>
+    </div>
+
+    <div class="flex flex-col gap-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed mb-space-xl md:mb-0">
+      <p>
+        <span class="text-on-surface font-semibold">Javaquero</span> es un café de especialidad cultivado en <span class="text-on-surface font-semibold">Santa María de Dota, Costa Rica, a 1900 msnm</span>. Su nombre hace honor a los productores y recolectores que con su incansable labor permiten producir <span class="text-on-surface font-semibold">un café de muy alta calidad</span> donde predominan las <span class="text-on-surface font-semibold">notas limpias, buen cuerpo y sabor balanceado</span>.
+      </p>
+
+      <p class="font-headline-sm text-headline-sm text-primary italic font-medium border-l-2 border-primary/40 pl-space-md">
+        Un café con identidad, alta trazabilidad y origen claro.
+      </p>
+
+      <p>
+        Javaquero une dos mundos que, aunque distintos, comparten una misma raíz: la tierra, el trabajo duro y la libertad.
+      </p>
+
+      <div class="flex items-center gap-space-sm py-space-2xs" aria-hidden="true">
+        <span class="h-px flex-1 bg-primary/25"></span>
+        <span class="material-symbols-outlined text-primary text-lg">eco</span>
+        <span class="h-px flex-1 bg-primary/25"></span>
+      </div>
+
+      <div class="flex flex-col gap-space-sm">
+        <div class="p-space-md rounded-xl bg-surface-container border border-primary/10">
+          <span class="font-headline-sm text-headline-sm text-primary italic">“Java”</span>
+          <p class="mt-1">Una palabra histórica para referirse al café. Nació del vínculo con la isla de Java, en Indonesia, una de las primeras regiones del mundo en cultivar café para exportación. Con el tiempo, se volvió sinónimo de esta bebida que mueve culturas y despierta almas.</p>
+        </div>
+        <div class="p-space-md rounded-xl bg-surface-container border border-primary/10">
+          <span class="font-headline-sm text-headline-sm text-primary italic">“Vaquero”</span>
+          <p class="mt-1">Representa al hombre del campo: libre, resistente, curtido por el sol y el barro, formado en jornadas largas y guiado por propósito.</p>
+        </div>
+      </div>
+
+      <p class="text-center font-headline-sm text-headline-sm text-on-surface font-semibold pt-space-sm">
+        De esa unión nace <span class="text-primary uppercase tracking-wide">Javaquero</span>.
+      </p>
+    </div>
+    </div>
+
+    <div class="flex flex-col gap-space-sm">
+      <div class="p-space-md rounded-xl bg-surface-container flex items-start gap-space-sm shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-primary text-xl">handshake</span>
+        </div>
+        <div class="flex flex-col">
+          <h4 class="font-title-md text-title-md text-on-surface font-semibold">Comercio Directo y Justo</h4>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Relaciones transparentes con familias caficultoras. Cero intermediarios abusivos.</p>
+        </div>
+      </div>
+      <div class="p-space-md rounded-xl bg-surface-container flex items-start gap-space-sm shadow-sm">
+        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
+        </div>
+        <div class="flex flex-col">
+          <h4 class="font-title-md text-title-md text-on-surface font-semibold">Envíos Exprés Garantizados</h4>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Embalaje al vacío con válvula desgasificadora. Enviado en 24h tras el reposo óptimo del grano.</p>
+        </div>
+      </div>
+    </div>
+   </div>
+  </section>
+
+  <!-- SECTION: CONTACTO & CONCIERGE (#contacto) -->
+  <section class="px-space-md py-space-2xl md:max-w-2xl md:mx-auto md:px-space-xl flex flex-col scroll-mt-20" id="contacto">
+    <div class="flex flex-col items-start mb-space-md">
+      <div class="flex items-center gap-space-2xs mb-space-2xs">
+        <span class="material-symbols-outlined text-primary text-sm">support_agent</span>
+        <span class="font-label-md text-label-md uppercase tracking-widest text-primary">Servicio y Cupping</span>
+      </div>
+      <h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">
+        Contacto
+      </h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+        Escríbenos para conocer disponibilidad, tiempos de tueste y coordinar el envío de tu pedido.
+      </p>
+    </div>
+
+    <div class="p-space-md rounded-2xl bg-surface-container flex flex-col gap-space-md mb-space-md shadow-lg">
+      <div class="flex items-start gap-space-sm">
+        <span class="material-symbols-outlined text-primary text-xl mt-0.5">schedule</span>
+        <div>
+          <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Horario de Atención y Despacho</span>
+          <p class="font-body-md text-body-md text-on-surface">Lunes a Sábado: 8:00 AM – 7:00 PM</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-space-sm">
+        <span class="material-symbols-outlined text-primary text-xl mt-0.5">storefront</span>
+        <div>
+          <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Tostaduría &amp; Laboratorio</span>
+          <p class="font-body-md text-body-md text-on-surface">Santa María de Dota, Costa Rica</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-space-sm">
+        <span class="material-symbols-outlined text-primary text-xl mt-0.5">mark_email_read</span>
+        <div>
+          <span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Correo Electrónico</span>
+          <p class="font-body-md text-body-md text-on-surface">concierge@javaquero.coffee</p>
+        </div>
+      </div>
+    </div>
+
+    <a class="w-full py-4 px-space-md rounded-2xl bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_20px_rgba(242,202,80,0.3)] active:scale-98 transition-all" data-wa-message="Hola Javaquero, quiero comprar café de tueste medio" href="#" rel="noopener noreferrer" target="_blank">
+      <span class="material-symbols-outlined text-xl">forum</span>
+      <span>Escríbenos por WhatsApp</span>
+    </a>
+  </section>
+
+</div>
+
+<footer class="mt-space-3xl px-space-md pt-space-2xl pb-40 md:pb-space-3xl bg-surface-container-lowest text-on-surface-variant flex flex-col gap-space-xl">
+ <div class="w-full md:max-w-6xl md:mx-auto flex flex-col gap-space-xl md:grid md:grid-cols-3 md:gap-space-2xl">
+  <div class="flex flex-col gap-space-xs">
+    <div class="flex items-center gap-space-xs">
+      <span class="material-symbols-outlined text-primary">workspace_premium</span>
+      <span class="font-headline-sm text-headline-sm text-primary uppercase">Javaquero</span>
+    </div>
+    <p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">Micro-lotes selectos y tueste artesanal de alta cuna. La máxima reverencia a la herencia cafetalera y el perfil sensorial supremo.</p>
+  </div>
+  <div class="py-space-sm md:py-0">
+    <div class="flex flex-col gap-space-2xs p-space-sm rounded-DEFAULT bg-surface-container-low max-w-[10rem]">
+      <span class="font-label-sm text-label-sm text-primary uppercase">Origen</span>
+      <span class="font-title-md text-title-md text-on-surface">1,900 msnm</span>
+      <span class="font-body-sm text-body-sm text-outline">Estricta Altura</span>
+    </div>
+  </div>
+  <div class="flex flex-col gap-space-xs">
+    <span class="font-label-md text-label-md text-primary uppercase tracking-widest">Contacto &amp; Cupping Room</span>
+    <div class="flex items-center gap-space-xs">
+      <span class="material-symbols-outlined text-base text-primary">pin_drop</span>
+      <span class="font-body-sm text-body-sm text-on-surface">Santa María de Dota, Costa Rica</span>
+    </div>
+    <div class="flex items-center gap-space-xs">
+      <span class="material-symbols-outlined text-base text-primary">mail</span>
+      <span class="font-body-sm text-body-sm text-on-surface">concierge@javaquero.coffee</span>
+    </div>
+  </div>
+ </div>
+  <div class="pt-space-md flex flex-col gap-space-2xs items-center text-center">
+    <p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">© 2024 Javaquero Specialty Coffee. All rights reserved.</p>
+  </div>
+</footer>
+
+</main>
+
+<a aria-label="Chat on WhatsApp" class="fixed bottom-24 md:bottom-8 right-space-md md:right-space-xl z-40 w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.35)] hover:scale-105 active:scale-95 transition-all duration-200" data-wa-message="Hola Javaquero, quiero comprar café de tueste medio" href="#" rel="noopener noreferrer" target="_blank">
+  <span class="material-symbols-outlined text-2xl">chat</span>
+</a>
+
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.6)] md:hidden" data-active-classes="text-primary">
+  <div class="flex justify-around items-center h-16 px-space-xs">
+    <a aria-current="page" class="flex flex-col items-center justify-center gap-space-2xs min-w-[44px] min-h-[44px] px-space-xs transition-colors text-primary" data-path="inicio" href="#inicio">
+      <span class="material-symbols-outlined text-xl">home</span>
+      <span class="font-label-sm text-label-sm uppercase">Inicio</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-space-2xs min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="cafes" href="#cafes">
+      <span class="material-symbols-outlined text-xl">coffee</span>
+      <span class="font-label-sm text-label-sm uppercase">Cafés</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-space-2xs min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="nosotros" href="#nosotros">
+      <span class="material-symbols-outlined text-xl">auto_awesome</span>
+      <span class="font-label-sm text-label-sm uppercase">Nosotros</span>
+    </a>
+    <a class="flex flex-col items-center justify-center gap-space-2xs min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="contacto" href="#contacto">
+      <span class="material-symbols-outlined text-xl">contact_support</span>
+      <span class="font-label-sm text-label-sm uppercase">Contacto</span>
+    </a>
+  </div>
+</nav>
+
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
