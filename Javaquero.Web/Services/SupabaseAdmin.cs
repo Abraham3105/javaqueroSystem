@@ -51,9 +51,11 @@ public sealed class SupabaseAdmin(HttpClient client, IConfiguration configuratio
 
     private const string ProductsPath = "rest/v1/JV_PRODUCTO_TB";
 
-    public async Task<Product[]> ListProductsAsync(long? id, CancellationToken ct)
+    public async Task<Product[]> ListProductsAsync(long? id, CancellationToken ct, bool activeOnly = false)
     {
         var query = id is long productId ? $"id=eq.{productId}" : "order=nombre,id";
+        if (activeOnly)
+            query += "&activo=eq.true";
         using var request = CreateRequest(HttpMethod.Get, $"{ProductsPath}?{query}", "SecretKey");
         using var response = await client.SendAsync(request, ct);
         response.EnsureSuccessStatusCode();
@@ -96,4 +98,3 @@ public sealed class SupabaseAdmin(HttpClient client, IConfiguration configuratio
 }
 
 public sealed record AdminProfile(Guid Id, string Nombre, bool Activo);
-

@@ -58,3 +58,106 @@ body { margin: 0; background: var(--cream); color: var(--ink); font-family: syst
     .admin-sidebar nav a { width: auto; }
     .sidebar-footer button { width: auto; }
 }
+
+.admin-content { min-width: 0; }
+.admin-content h1 { overflow-wrap: anywhere; }
+.admin-content .table th, .admin-content .table td { overflow-wrap: anywhere; }
+
+@media (max-width: 480px) {
+    .admin-sidebar nav a, .sidebar-footer button { min-height: 44px; }
+    .admin-content .table th, .admin-content .table td { padding: .65rem .5rem; }
+    .admin-content .table th { font-size: .85rem; }
+    .admin-content .form-control { font-size: 1rem; }
+}
+
+.product-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+}
+
+.admin-content .btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.admin-content .table td a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: .65rem;
+    border-radius: .55rem;
+    background: #f1e4d2;
+    font-weight: 700;
+    text-decoration: none;
+}
+.admin-content .table td a:hover { background: #e8d5bc; }
+
+@media (max-width: 720px) {
+    .admin-sidebar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+    .admin-sidebar nav {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .admin-sidebar nav a { text-align: center; min-height: 44px; padding-inline: .25rem; }
+    .sidebar-footer { margin: 0; }
+    .sidebar-footer button { min-height: 44px; font-size: .85rem; padding-inline: .35rem; }
+    .admin-content .table-responsive { background: transparent; border: 0; overflow: visible; }
+    .admin-records, .admin-records tbody { display: block; }
+    .admin-records thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+    .admin-records tr {
+        display: grid;
+        gap: .5rem;
+        margin-bottom: .8rem;
+        padding: .9rem;
+        border: 1px solid var(--line);
+        border-radius: .85rem;
+        background: var(--paper);
+    }
+    .admin-content .admin-records td {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+        align-items: center;
+        gap: .5rem;
+        padding: .15rem 0;
+        border: 0;
+        text-align: right;
+    }
+    .admin-records td::before {
+        content: attr(data-label);
+        text-align: left;
+        color: var(--muted);
+        font-size: .8rem;
+        font-weight: 650;
+    }
+    .admin-content .admin-records td:first-child {
+        display: block;
+        padding-bottom: .55rem;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        font-size: 1.08rem;
+        font-weight: 750;
+    }
+    .admin-records td:first-child::before { content: none; }
+    .admin-records td > * { justify-self: end; }
+}
+
+@media (max-width: 480px) {
+    .product-fields { grid-template-columns: minmax(0, 1fr); }
+    .admin-content form .btn { width: 100%; }
+    .admin-content form a { display: inline-flex; align-items: center; min-height: 44px; }
+}

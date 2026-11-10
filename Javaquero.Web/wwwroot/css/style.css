@@ -31,3 +31,36 @@
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+.public-main {
+  padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+}
+
+.public-hero {
+  display: flex;
+  min-height: clamp(29rem, 70svh, 40rem);
+}
+
+.public-admin-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: .35rem;
+  min-height: 44px;
+  padding: 0 .65rem;
+  border: 1px solid #f2ca5080;
+  border-radius: 999px;
+  color: #f2ca50;
+  font-size: clamp(.7rem, 2.8vw, .875rem);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.public-admin-link .material-symbols-outlined { font-size: 1rem; }
+.public-admin-link:hover { background: #f2ca5020; }
+.public-admin-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+@media (max-width: 360px) {
+  .public-header > div { padding-inline: .5rem; }
+  .public-header img { display: none; }
+}

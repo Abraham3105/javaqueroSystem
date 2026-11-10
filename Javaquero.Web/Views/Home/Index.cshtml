@@ -1,9 +1,10 @@
+@model Product[]
 @{ Layout = null; }
 <!DOCTYPE html>
 <html class="dark" lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Javaquero — Café de Especialidad</title>
 <link rel="icon" href="/favicon.ico"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -11,40 +12,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="/css/style.css" rel="stylesheet"/>
+<link href="/css/style.css" rel="stylesheet" asp-append-version="true"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="/js/tailwind-config.js"></script>
 </head>
 <body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen">
 
-<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-  <div class="h-16 px-space-md md:px-space-xl md:max-w-6xl md:mx-auto flex items-center justify-between">
+<header class="fixed top-0 w-full z-50 pt-safe public-header bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+  <div class="h-16 px-space-md md:px-space-xl md:max-w-6xl md:mx-auto flex items-center justify-between gap-2">
     <div class="flex items-center gap-space-xs">
       <img alt="Javaquero" class="w-8 h-8 rounded-full object-cover bg-surface-container-lowest" src="/img/logo.png"/>
       <div class="flex flex-col">
         <span class="font-headline-sm text-headline-sm tracking-wide text-primary uppercase leading-tight">Javaquero</span>
-        <span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant uppercase md:hidden" id="header-subtitle">Inicio</span>
+        <span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant uppercase lg:hidden" id="header-subtitle">Inicio</span>
       </div>
     </div>
-    <nav class="hidden md:flex items-center gap-space-xl">
+    <nav class="hidden lg:flex items-center gap-space-lg">
       <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-primary" data-path="inicio" href="#inicio">Inicio</a>
       <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="cafes" href="#cafes">Cafés</a>
       <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="nosotros" href="#nosotros">Nosotros</a>
       <a class="font-label-md text-label-md uppercase tracking-widest transition-colors text-on-surface-variant hover:text-primary" data-path="contacto" href="#contacto">Contacto</a>
     </nav>
+    <a class="public-admin-link" asp-controller="Admin" asp-action="Index">
+      <span class="material-symbols-outlined" aria-hidden="true">lock</span>
+      <span>Administración</span>
+    </a>
   </div>
 </header>
 
-<main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen">
+<main class="flex flex-col relative w-full public-main bg-surface min-h-screen">
 <div class="flex flex-col w-full text-on-surface">
 
   <!-- HERO SECTION -->
-  <section class="relative w-full h-[560px] md:h-[640px] overflow-hidden" id="inicio">
+  <section class="relative w-full public-hero overflow-hidden" id="inicio">
     <img alt="JAVAQUERO Espresso artesanal con crema dorada" class="absolute inset-0 w-full h-full object-cover object-center" src="/img/hero-espresso.jpg"/>
     <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/70 to-surface/20"></div>
     <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative z-10 h-full w-full px-space-md pb-space-2xl md:px-space-xl md:pb-space-3xl md:max-w-6xl md:mx-auto flex flex-col items-center justify-end text-center md:items-start md:text-left">
+    <div class="relative z-10 w-full px-space-md pt-space-xl pb-space-2xl md:px-space-xl md:pb-space-3xl md:max-w-6xl md:mx-auto flex flex-col items-center justify-end text-center md:items-start md:text-left">
       <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface font-semibold max-w-sm md:max-w-lg mb-space-sm leading-tight">
         Nobleza, Pasión y <span class="text-primary italic">Tueste Perfecto</span>
       </h1>
@@ -87,8 +92,24 @@
       </p>
     </div>
 
-    <!-- Las tarjetas de producto se generan dinámicamente desde js/products.js -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg w-full" id="products-list"></div>
+
+    @if (Model is null)
+    {
+      <p>El catálogo no está disponible en este momento. Puedes consultarnos por WhatsApp.</p>
+    }
+    else if (Model.Length == 0)
+    {
+      <p>Por el momento no hay cafés disponibles.</p>
+    }
+    else
+    {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg w-full" id="products-list">
+        @foreach (var product in Model)
+        {
+          <partial name="_ProductCard" model="product" />
+        }
+      </div>
+    }
   </section>
 
   <!-- SECTION: SOBRE NOSOTROS (#nosotros) -->
@@ -211,7 +232,7 @@
 
 </div>
 
-<footer class="mt-space-3xl px-space-md pt-space-2xl pb-40 md:pb-space-3xl bg-surface-container-lowest text-on-surface-variant flex flex-col gap-space-xl">
+<footer class="mt-space-3xl px-space-md pt-space-2xl pb-40 lg:pb-space-3xl bg-surface-container-lowest text-on-surface-variant flex flex-col gap-space-xl">
  <div class="w-full md:max-w-6xl md:mx-auto flex flex-col gap-space-xl md:grid md:grid-cols-3 md:gap-space-2xl">
   <div class="flex flex-col gap-space-xs">
     <div class="flex items-center gap-space-xs">
@@ -250,7 +271,7 @@
   <span class="material-symbols-outlined text-2xl">chat</span>
 </a>
 
-<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.6)] md:hidden" data-active-classes="text-primary">
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.6)] lg:hidden" data-active-classes="text-primary">
   <div class="flex justify-around items-center h-16 px-space-xs">
     <a aria-current="page" class="flex flex-col items-center justify-center gap-space-2xs min-w-[44px] min-h-[44px] px-space-xs transition-colors text-primary" data-path="inicio" href="#inicio">
       <span class="material-symbols-outlined text-xl">home</span>
@@ -271,8 +292,6 @@
   </div>
 </nav>
 
-<script src="/js/products.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/main.js" asp-append-version="true"></script>
 </body>
 </html>
-

@@ -6,15 +6,15 @@
     <p class="alert alert-danger">@error</p>
 }
 <p><a asp-action="Create" class="btn btn-primary">Nuevo producto</a></p>
-<div class="table-responsive"><table class="table align-middle">
+<div class="table-responsive"><table class="table align-middle admin-records" aria-label="Productos">
     <thead><tr><th>Nombre</th><th>USD</th><th>CRC</th><th>Estado</th><th>Acción</th></tr></thead>
     <tbody>
     @foreach (var product in Model)
     {
         <tr>
-            <td>@product.Nombre</td><td>@product.PrecioUsd.ToString("F2")</td><td>@product.PrecioCrc.ToString("F2")</td>
-            <td><span class="status-pill @(product.Activo ? "status-active" : "")">@(product.Activo ? "Activo" : "Inactivo")</span></td>
-            <td><a asp-action="Edit" asp-route-id="@product.Id">Editar</a></td>
+            <td data-label="Nombre">@product.Nombre</td><td data-label="USD">@product.PrecioUsd.ToString("F2")</td><td data-label="CRC">@product.PrecioCrc.ToString("F2")</td>
+            <td data-label="Estado"><span class="status-pill @(product.Activo ? "status-active" : "")">@(product.Activo ? "Activo" : "Inactivo")</span></td>
+            <td data-label="Acción"><a asp-action="Edit" asp-route-id="@product.Id">Editar</a></td>
         </tr>
     }
     </tbody>
