@@ -1,0 +1,52 @@
+@using System.Globalization
+@model Product
+@{
+    var culture = CultureInfo.GetCultureInfo("en-US");
+    var message = Uri.EscapeDataString($"Hola Javaquero, quiero pedir el café {Model.Nombre} ({Model.Presentacion}).");
+    var image = Model.Imagen;
+    if (!Url.IsLocalUrl(image) && !image.StartsWith("img/", StringComparison.OrdinalIgnoreCase) &&
+        !(Uri.TryCreate(image, UriKind.Absolute, out var uri) && uri.Scheme == Uri.UriSchemeHttps))
+    {
+        image = "/img/hero-espresso.jpg";
+    }
+}
+<article class="flex flex-col rounded-2xl bg-surface-container overflow-hidden shadow-xl">
+  <div class="relative w-full h-64 bg-surface-container-lowest overflow-hidden">
+    <img alt="@Model.Nombre" class="w-full h-full object-cover" src="@Url.Content(image)" loading="lazy" />
+    <div class="absolute top-3 right-3 px-space-xs py-1 rounded-full bg-surface-container-highest/90 backdrop-blur-md">
+      <span class="font-label-sm text-label-sm text-primary uppercase font-bold">SCA @Model.PuntajeSca.ToString("0.0", culture) Pts</span>
+    </div>
+    <div class="absolute bottom-3 left-3 px-space-xs py-1 rounded-full bg-primary text-on-primary">
+      <span class="font-label-sm text-label-sm font-bold uppercase">@Model.Proceso</span>
+    </div>
+  </div>
+  <div class="p-space-md flex flex-1 flex-col gap-space-sm">
+    <div class="flex flex-wrap items-start justify-between gap-space-xs">
+      <div>
+        <h3 class="font-title-lg text-title-lg text-on-surface font-semibold">@Model.Nombre</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm text-primary" aria-hidden="true">location_on</span>@Model.Origen
+        </p>
+      </div>
+      <div class="text-right">
+        <span class="font-title-lg text-title-lg text-primary font-bold block">$@Model.PrecioUsd.ToString("N2", culture)</span>
+        <span class="font-label-sm text-label-sm text-outline">₡@Model.PrecioCrc.ToString(Model.PrecioCrc % 1 == 0 ? "N0" : "N2", culture) CRC</span>
+      </div>
+    </div>
+    <div class="p-space-xs rounded-xl bg-surface-container-low flex flex-col gap-1">
+      <span class="font-label-sm text-label-sm text-primary uppercase font-semibold">Perfil sensorial</span>
+      <div class="flex flex-wrap gap-1.5">
+        @foreach (var note in Model.Notas)
+        {
+          <span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">@note</span>
+        }
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-2 text-on-surface-variant font-body-sm text-body-sm">
+      <span>@Model.Presentacion</span>
+      <span class="font-label-sm text-label-sm uppercase text-outline">Grano o Molido</span>
+    </div>
+    <a class="mt-auto w-full py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider text-center hover:brightness-105"
+       href="https://wa.me/50685838921?text=@message" rel="noopener noreferrer" target="_blank">Pedir por WhatsApp</a>
+  </div>
+</article>

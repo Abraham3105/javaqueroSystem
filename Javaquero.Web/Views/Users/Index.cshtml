@@ -2,15 +2,15 @@
 @{ ViewData["Title"] = "Usuarios"; }
 <h1>Usuarios administradores</h1>
 <p><a asp-action="Create" class="btn btn-primary">Vincular cuenta</a></p>
-<div class="table-responsive"><table class="table align-middle">
+<div class="table-responsive"><table class="table align-middle admin-records" aria-label="Usuarios administradores">
     <thead><tr><th>Nombre</th><th>Estado</th><th>Acción</th></tr></thead>
     <tbody>
     @foreach (var user in Model)
     {
         <tr>
-            <td>@user.Nombre</td>
-            <td><span class="status-pill @(user.Activo ? "status-active" : "")">@(user.Activo ? "Activo" : "Inactivo")</span></td>
-            <td><a asp-action="Edit" asp-route-id="@user.Id">Editar</a></td>
+            <td data-label="Nombre">@user.Nombre</td>
+            <td data-label="Estado"><span class="status-pill @(user.Activo ? "status-active" : "")">@(user.Activo ? "Activo" : "Inactivo")</span></td>
+            <td data-label="Acción"><a asp-action="Edit" asp-route-id="@user.Id">Editar</a></td>
         </tr>
     }
     </tbody>
