@@ -1,0 +1,39 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"] as string;
+    var signedIn = User.Identity?.IsAuthenticated == true;
+}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · Javaquero</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/admin.css" asp-append-version="true" />
+</head>
+<body class="@(signedIn ? "admin-shell" : "admin-guest")">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" asp-controller="Admin" asp-action="Index">
+            <span class="brand-mark" aria-hidden="true">J</span>
+            <span>Javaquero <small>Café de especialidad</small></span>
+        </a>
+        @if (signedIn)
+        {
+            <nav aria-label="Administración">
+                <p class="admin-kicker">Administración</p>
+                <a class="@(controller == "Admin" ? "current" : "")" asp-controller="Admin" asp-action="Index">Resumen</a>
+                <a class="@(controller == "Products" ? "current" : "")" asp-controller="Products" asp-action="Index">Productos</a>
+                <a class="@(controller == "Users" ? "current" : "")" asp-controller="Users" asp-action="Index">Usuarios</a>
+            </nav>
+            <form class="sidebar-footer" asp-controller="Admin" asp-action="Logout" method="post">
+                <button type="submit">Cerrar sesión</button>
+            </form>
+        }
+    </aside>
+    <main class="admin-main" id="contenido">
+        <div class="admin-topbar"><span>Panel Javaquero</span><a asp-controller="Home" asp-action="Index">Ver sitio público ↗</a></div>
+        <div class="admin-content">@RenderBody()</div>
+    </main>
+</body>
+</html>

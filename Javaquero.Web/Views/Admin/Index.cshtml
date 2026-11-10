@@ -1,0 +1,20 @@
+@{ ViewData["Title"] = "Resumen"; }
+<header class="admin-hero">
+    <p class="admin-kicker">Área de administración</p>
+    <h1>Panel de Javaquero</h1>
+    <p>Gestiona tu catálogo de cafés y las cuentas con acceso al panel.</p>
+</header>
+<div class="admin-grid">
+    <a class="admin-tile" asp-controller="Products" asp-action="Index">
+        <span class="tile-number">01</span>
+        <h2>Productos</h2>
+        <p>Edita precios, notas de cata y disponibilidad del catálogo.</p>
+        <span class="tile-link">Gestionar productos <span aria-hidden="true">→</span></span>
+    </a>
+    <a class="admin-tile" asp-controller="Users" asp-action="Index">
+        <span class="tile-number">02</span>
+        <h2>Usuarios</h2>
+        <p>Vincula cuentas y gestiona el acceso de los administradores.</p>
+        <span class="tile-link">Gestionar usuarios <span aria-hidden="true">→</span></span>
+    </a>
+</div>
