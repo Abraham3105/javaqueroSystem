@@ -1,0 +1,29 @@
+@model Javaquero.Web.Controllers.AdminUserInput
+@{
+    var creating = string.Equals(ViewContext.RouteData.Values["action"] as string, "Create", StringComparison.OrdinalIgnoreCase);
+    ViewData["Title"] = creating ? "Vincular cuenta" : "Editar usuario";
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post" asp-action="@(creating ? "Create" : "Edit")" asp-route-id="@(creating ? null : Model.Id.ToString())">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (creating)
+    {
+        <div class="mb-3">
+            <label asp-for="Id" class="form-label">UUID de la cuenta en Supabase Auth</label>
+            <input asp-for="Id" type="text" value="@(Model.Id == Guid.Empty ? "" : Model.Id.ToString())" class="form-control" required />
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" required />
+    </div>
+    @if (!creating)
+    {
+        <div class="form-check mb-3">
+            <input asp-for="Activo" class="form-check-input" />
+            <label asp-for="Activo" class="form-check-label"></label>
+        </div>
+    }
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a asp-action="Index">Cancelar</a>
+</form>

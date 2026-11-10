@@ -1,0 +1,18 @@
+@model Javaquero.Web.Services.AdminProfile[]
+@{ ViewData["Title"] = "Usuarios"; }
+<h1>Usuarios administradores</h1>
+<p><a asp-action="Create" class="btn btn-primary">Vincular cuenta</a></p>
+<div class="table-responsive"><table class="table align-middle">
+    <thead><tr><th>Nombre</th><th>Estado</th><th>Acción</th></tr></thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Nombre</td>
+            <td><span class="status-pill @(user.Activo ? "status-active" : "")">@(user.Activo ? "Activo" : "Inactivo")</span></td>
+            <td><a asp-action="Edit" asp-route-id="@user.Id">Editar</a></td>
+        </tr>
+    }
+    </tbody>
+</table></div>
+<a asp-controller="Admin" asp-action="Index">Volver al panel</a>

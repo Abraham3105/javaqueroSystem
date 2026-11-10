@@ -1,0 +1,15 @@
+@model Javaquero.Web.Controllers.AdminLogin
+@{ ViewData["Title"] = "Iniciar sesión"; }
+<h1>Administración de Javaquero</h1>
+<form asp-action="Login" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" autocomplete="username" required />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" autocomplete="current-password" required />
+    </div>
+    <button class="btn btn-primary" type="submit">Iniciar sesión</button>
+</form>
