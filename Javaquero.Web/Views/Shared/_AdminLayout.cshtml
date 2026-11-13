@@ -1,5 +1,6 @@
 @{
     var controller = ViewContext.RouteData.Values["controller"] as string;
+    var quotePage = controller == "Documents" && (ViewContext.RouteData.Values["action"] as string) == "Quotes";
     var signedIn = User.Identity?.IsAuthenticated == true;
 }
 <!doctype html>
@@ -15,7 +16,7 @@
 <body class="@(signedIn ? "admin-shell" : "admin-guest")">
     <aside class="admin-sidebar">
         <a class="admin-brand" asp-controller="Admin" asp-action="Index">
-            <span class="brand-mark" aria-hidden="true">J</span>
+            <img class="brand-mark" src="/img/logo.png" asp-append-version="true" alt="" width="41" height="41" />
             <span>Javaquero <small>Café de especialidad</small></span>
         </a>
         @if (signedIn)
@@ -25,7 +26,8 @@
                 <a class="@(controller == "Admin" ? "current" : "")" asp-controller="Admin" asp-action="Index">Resumen</a>
                 <a class="@(controller == "Products" ? "current" : "")" asp-controller="Products" asp-action="Index">Productos</a>
                 <a class="@(controller == "Users" ? "current" : "")" asp-controller="Users" asp-action="Index">Usuarios</a>
-                <a class="@(controller == "Documents" ? "current" : "")" asp-controller="Documents" asp-action="Index">Documentos</a>
+                <a class="@(controller == "Documents" && !quotePage ? "current" : "")" asp-controller="Documents" asp-action="Index">Precios</a>
+                <a class="@(quotePage ? "current" : "")" asp-controller="Documents" asp-action="Quotes">Cotizaciones</a>
             </nav>
             <form class="sidebar-footer" asp-controller="Admin" asp-action="Logout" method="post">
                 <button type="submit">Cerrar sesión</button>
@@ -34,7 +36,16 @@
     </aside>
     <main class="admin-main" id="contenido">
         <div class="admin-topbar"><span>Panel Javaquero</span><a asp-controller="Home" asp-action="Index">Ver sitio público ↗</a></div>
-        <div class="admin-content">@RenderBody()</div>
+        <div class="admin-content">
+            @if (signedIn && (controller != "Admin" || !string.Equals(ViewContext.RouteData.Values["action"] as string, "Index", StringComparison.OrdinalIgnoreCase)))
+            {
+                <a class="admin-back-link" asp-controller="Admin" asp-action="Index">
+                    <span aria-hidden="true">←</span> Volver al resumen
+                </a>
+            }
+            @RenderBody()
+        </div>
     </main>
 </body>
 </html>
+

@@ -1,6 +1,6 @@
 @model DocumentData
-@{ ViewData["Title"] = "Documentos"; }
-<h1>Documentos</h1>
+@{ ViewData["Title"] = "Precios"; }
+<h1>Precios</h1>
 @if (TempData["DocumentStatus"] is string status) { <p class="alert alert-success" role="status">@status</p> }
 @if (TempData["DocumentError"] is string error) { <p class="alert alert-danger" role="alert">@error</p> }
 @if (Model is null)
@@ -8,20 +8,27 @@
     <p class="alert alert-warning">No se pudo cargar Documentos. Verifica que el script 004_documentos.sql se haya aplicado en Supabase.</p>
     return;
 }
-<form asp-action="PriceList" method="get" class="mb-4">
+<nav class="d-flex flex-wrap gap-3 mb-4" aria-label="Ir a">
+    <a href="#lista-precios">Lista de precios</a>
+    <a href="#editar-precio">Editar precios</a>
+</nav>
+<form id="lista-precios" asp-action="PriceList" method="get" class="mb-4">
     <h2>Lista de precios</h2>
     <label for="harvest" class="form-label">Cosecha</label>
     <input id="harvest" name="harvest" class="form-control mb-3" maxlength="40" placeholder="2026–2027" />
     <button class="btn btn-primary">Ver lista</button>
 </form>
-<form asp-action="Price" method="post" class="mb-4">
+<form id="editar-precio" asp-action="Price" method="post" class="mb-4">
     <h2>Precios por presentación</h2>
     <label for="productId" class="form-label">Café</label>
     <select id="productId" name="productId" class="form-select mb-3" required>
         <option value="">Selecciona un café</option>
         @foreach (var product in Model.Products)
         {
-            <option value="@product.Id">@product.Nombre</option>
+            <option value="@product.Id"
+                    data-price-250="@Model.Prices.FirstOrDefault(price => price.ProductoId == product.Id && price.Gramos == 250)?.PrecioCrc.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                    data-price-500="@Model.Prices.FirstOrDefault(price => price.ProductoId == product.Id && price.Gramos == 500)?.PrecioCrc.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                    data-price-1000="@Model.Prices.FirstOrDefault(price => price.ProductoId == product.Id && price.Gramos == 1000)?.PrecioCrc.ToString(System.Globalization.CultureInfo.InvariantCulture)">@product.Nombre</option>
         }
     </select>
     <label for="grams" class="form-label">Presentación</label>
@@ -32,47 +39,5 @@
     <input id="amount" name="amount" class="form-control mb-3" type="number" min=".01" max="9999999999.99" step=".01" required />
     <button class="btn btn-primary">Guardar precio</button>
 </form>
-@if (Model.Products.Any(product => Model.Prices.Any(price => price.ProductoId == product.Id)))
-{
-    <form asp-action="CreateQuote" method="post" class="mb-4" id="quote-form">
-        <h2>Nueva cotización</h2>
-        <input type="hidden" name="requestId" value="@Guid.NewGuid()" />
-        <label for="customer" class="form-label">Cliente</label>
-        <input id="customer" name="customer" class="form-control mb-3" maxlength="120" required />
-        <div id="quote-lines"></div>
-        <button type="button" id="add-quote-line" class="btn btn-outline-secondary">Agregar línea</button>
-        <button class="btn btn-primary">Guardar y ver PDF</button>
-    </form>
-    <template id="quote-line-template">
-        <fieldset class="mb-3">
-            <legend class="fs-6">Producto y cantidad</legend>
-            <div class="d-flex flex-wrap gap-2">
-                <select name="items" class="form-select flex-fill w-auto" aria-label="Café y presentación" required>
-                    <option value="">Selecciona un café</option>
-                    @foreach (var product in Model.Products)
-                    {
-                        @foreach (var price in Model.Prices.Where(price => price.ProductoId == product.Id).OrderBy(price => price.Gramos))
-                        {
-                            <option value="@($"{product.Id}:{price.Gramos}")">@product.Nombre · @DocumentData.Size(price.Gramos) · @DocumentData.Money(price.PrecioCrc)</option>
-                        }
-                    }
-                </select>
-                <input name="quantities" class="form-control" aria-label="Cantidad" type="number" min="1" max="999" value="1" required />
-                <button type="button" class="btn btn-outline-secondary" data-remove>Quitar línea</button>
-            </div>
-        </fieldset>
-    </template>
-    <script src="/js/documents.js" asp-append-version="true" defer></script>
-}
-else
-{
-    <p>Guarda el precio de un café activo para crear una cotización.</p>
-}
-<h2>Cotizaciones recientes</h2>
-@if (Model.Quotes.Length == 0) { <p>Todavía no hay cotizaciones.</p> }
-<ul class="list-group">
-    @foreach (var quote in Model.Quotes)
-    {
-        <li class="list-group-item"><a asp-action="QuotePreview" asp-route-id="@quote.Id">#@quote.Id · @quote.Cliente · @DocumentData.Money(quote.Total)</a></li>
-    }
-</ul>
+<script src="/js/documents.js" asp-append-version="true" defer></script>
+

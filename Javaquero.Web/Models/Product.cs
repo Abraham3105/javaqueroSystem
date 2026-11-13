@@ -26,7 +26,6 @@ public sealed class Product
     [Range(0, 9999999999.99), Display(Name = "Precio CRC")]
     [JsonPropertyName("precio_crc")]
     public decimal PrecioCrc { get; set; }
-    [Required, StringLength(500), Display(Name = "Ruta o URL de la imagen")]
     public string Imagen { get; set; } = "";
     public bool Activo { get; set; } = true;
 }

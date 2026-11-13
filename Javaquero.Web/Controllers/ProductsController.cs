@@ -18,8 +18,8 @@ public sealed class ProductsController(SupabaseAdmin supabase) : Controller
     public IActionResult Create() => View("Edit", new Product());
 
     [HttpPost("Nuevo")]
-    public Task<IActionResult> Create(Product product, string? notasTexto, CancellationToken ct) =>
-        Save(null, product, notasTexto, ct);
+    public Task<IActionResult> Create(Product product, string? notasTexto, IFormFile? foto, CancellationToken ct) =>
+        Save(null, product, notasTexto, foto, ct);
 
     [HttpGet("{id:long}")]
     public async Task<IActionResult> Edit(long id, CancellationToken ct)
@@ -29,8 +29,8 @@ public sealed class ProductsController(SupabaseAdmin supabase) : Controller
     }
 
     [HttpPost("{id:long}")]
-    public Task<IActionResult> Edit(long id, Product product, string? notasTexto, CancellationToken ct) =>
-        Save(id, product, notasTexto, ct);
+    public Task<IActionResult> Edit(long id, Product product, string? notasTexto, IFormFile? foto, CancellationToken ct) =>
+        Save(id, product, notasTexto, foto, ct);
 
     [HttpPost("{id:long}/Eliminar")]
     public async Task<IActionResult> Delete(long id, CancellationToken ct)
@@ -48,18 +48,40 @@ public sealed class ProductsController(SupabaseAdmin supabase) : Controller
         }
     }
 
-    private async Task<IActionResult> Save(long? id, Product product, string? notasTexto, CancellationToken ct)
+    private async Task<IActionResult> Save(long? id, Product product, string? notasTexto, IFormFile? foto, CancellationToken ct)
     {
         product.Id = id ?? 0;
         product.Notas = (notasTexto ?? "").Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        product.Imagen = "";
+        if (id is long productId)
+        {
+            var current = (await supabase.ListProductsAsync(productId, ct)).SingleOrDefault();
+            if (current is null)
+                return NotFound();
+            product.Imagen = current.Imagen;
+        }
+
+        if (id is null && foto is null)
+            ModelState.AddModelError("foto", "Selecciona una imagen del café.");
+
         if (!ModelState.IsValid)
             return View("Edit", product);
 
         try
         {
-            return await supabase.WriteProductAsync(id is null ? HttpMethod.Post : HttpMethod.Patch, id, product, ct)
+            if (foto is not null)
+            {
+                product.Imagen = await supabase.UploadProductImageAsync(foto, ct);
+            }
+
+            return await supabase.WriteProductAsync(id is null ? HttpMethod.Post : HttpMethod.Patch, id, product, ct, writeImage: foto is not null)
                 ? RedirectToAction(nameof(Index))
                 : NotFound();
+        }
+        catch (InvalidDataException ex)
+        {
+            ModelState.AddModelError("foto", ex.Message);
+            return View("Edit", product);
         }
         catch (HttpRequestException ex)
         {

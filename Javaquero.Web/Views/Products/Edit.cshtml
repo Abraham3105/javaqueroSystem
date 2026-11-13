@@ -4,7 +4,7 @@
     ViewData["Title"] = creating ? "Nuevo producto" : "Editar producto";
 }
 <h1>@ViewData["Title"]</h1>
-<form method="post" asp-action="@(creating ? "Create" : "Edit")" asp-route-id="@(creating ? null : Model.Id.ToString())">
+<form method="post" enctype="multipart/form-data" asp-action="@(creating ? "Create" : "Edit")" asp-route-id="@(creating ? null : Model.Id.ToString())">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="product-fields">
     <div class="mb-3"><label asp-for="Nombre" class="form-label"></label><input asp-for="Nombre" class="form-control" required /></div>
@@ -16,7 +16,19 @@
     <div class="mb-3"><label asp-for="PrecioUsd" class="form-label"></label><input asp-for="PrecioUsd" class="form-control" type="number" step="0.01" min="0" required /></div>
     <div class="mb-3"><label asp-for="PrecioCrc" class="form-label"></label><input asp-for="PrecioCrc" class="form-control" type="number" step="0.01" min="0" required /></div>
     </div>
-    <div class="mb-3"><label asp-for="Imagen" class="form-label"></label><input asp-for="Imagen" class="form-control" required /></div>
+    <div class="mb-3">
+        <label for="foto" class="form-label">Foto del café</label>
+        @if (!creating && !string.IsNullOrWhiteSpace(Model.Imagen))
+        {
+            <img src="@Url.Content(Model.Imagen)" alt="Foto actual del café" class="d-block rounded mb-2" width="120" height="120" style="object-fit: cover" />
+        }
+        <input id="foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp"
+               class="form-control" required="@creating" aria-describedby="foto-ayuda" />
+        <div id="foto-ayuda" class="form-text">
+            JPG, PNG o WebP de hasta 5 MB.
+            @if (!creating) { <span>Si dejas el campo vacío, se conserva la foto actual.</span> }
+        </div>
+    </div>
     <div class="mb-3">
         <label for="notasTexto" class="form-label">Notas de cata (una por línea)</label>
         <textarea id="notasTexto" name="notasTexto" class="form-control">@string.Join("\n", Model.Notas)</textarea>

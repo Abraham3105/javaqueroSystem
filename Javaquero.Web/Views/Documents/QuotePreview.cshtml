@@ -2,7 +2,11 @@
 @{
     Layout = "_DocumentLayout";
     ViewData["Title"] = "Cotización";
+    ViewData["BackAction"] = "Quotes";
     var date = Model.CreadoEn.ToOffset(TimeSpan.FromHours(-6));
+    var customer = string.Concat(Model.Cliente.Where(char.IsLetterOrDigit));
+    if (customer.Length == 0) customer = "Cliente";
+    ViewData["PdfTitle"] = $"Cotizacion_N{Model.Id}_{customer}_{date.ToString("dd-MM", System.Globalization.CultureInfo.InvariantCulture)}";
 }
 <div class="document-meta">
     <p><strong>Cliente</strong> @Model.Cliente</p>
