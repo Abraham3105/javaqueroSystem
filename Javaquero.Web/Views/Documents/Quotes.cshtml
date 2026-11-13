@@ -1,0 +1,63 @@
+@model DocumentData
+@{ ViewData["Title"] = "Cotizaciones"; }
+<h1>Cotizaciones</h1>
+
+@if (TempData["DocumentError"] is string error) { <p class="alert alert-danger" role="alert">@error</p> }
+@if (Model is null)
+{
+    <p class="alert alert-warning">No se pudieron cargar las cotizaciones.</p>
+    return;
+}
+<div class="quote-workspace">
+<section aria-labelledby="nueva-cotizacion">
+@if (Model.Products.Any(product => Model.Prices.Any(price => price.ProductoId == product.Id)))
+{
+    <form asp-action="CreateQuote" method="post" class="mb-4" id="quote-form">
+        <h2 id="nueva-cotizacion">Nueva cotización</h2>
+        <input type="hidden" name="requestId" value="@Guid.NewGuid()" />
+        <label for="customer" class="form-label">Cliente</label>
+        <input id="customer" name="customer" class="form-control mb-3" maxlength="120" required />
+        <div id="quote-lines"></div>
+        <p class="fw-bold fs-5">Total estimado <output id="quote-total" aria-live="polite">₡0,00</output></p>
+        <button type="button" id="add-quote-line" class="btn btn-outline-secondary">Agregar línea</button>
+        <button class="btn btn-primary">Guardar cotización</button>
+    </form>
+    <template id="quote-line-template">
+        <fieldset class="mb-3">
+            <legend class="fs-6">Producto y cantidad</legend>
+            <div class="quote-line-fields">
+                <select name="items" class="form-select" aria-label="Café y presentación" required>
+                    <option value="">Selecciona un café</option>
+                    @foreach (var product in Model.Products)
+                    {
+                        @foreach (var price in Model.Prices.Where(price => price.ProductoId == product.Id).OrderBy(price => price.Gramos))
+                        {
+                            <option value="@($"{product.Id}:{price.Gramos}")" data-price="@price.PrecioCrc.ToString(System.Globalization.CultureInfo.InvariantCulture)">@product.Nombre · @DocumentData.Size(price.Gramos) · @DocumentData.Money(price.PrecioCrc)</option>
+                        }
+                    }
+                </select>
+                <input name="quantities" class="form-control" aria-label="Cantidad" type="number" min="1" max="999" value="1" required />
+                <button type="button" class="btn btn-outline-secondary" data-remove>Quitar línea</button>
+            </div>
+        </fieldset>
+    </template>
+}
+else
+{
+    <h2 id="nueva-cotizacion">Nueva cotización</h2><p><a asp-action="Index">Configura un precio</a> para empezar a cotizar.</p>
+}
+</section>
+<section class="quote-history" aria-labelledby="cotizaciones">
+<h2 id="cotizaciones">Historial reciente</h2>
+@if (Model.Quotes.Length == 0) { <p>Todavía no hay cotizaciones.</p> }
+<ul class="list-group">
+    @foreach (var quote in Model.Quotes)
+    {
+        <li class="list-group-item"><a asp-action="QuotePreview" asp-route-id="@quote.Id">#@quote.Id · @quote.Cliente · @DocumentData.Money(quote.Total)</a></li>
+    }
+</ul>
+</section>
+</div>
+<script src="/js/documents.js" asp-append-version="true" defer></script>
+
+

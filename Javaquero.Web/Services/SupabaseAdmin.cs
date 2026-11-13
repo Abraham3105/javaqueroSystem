@@ -62,20 +62,22 @@ public sealed class SupabaseAdmin(HttpClient client, IConfiguration configuratio
         return (await response.Content.ReadFromJsonAsync<Product[]>(ct))!;
     }
 
-    public async Task<bool> WriteProductAsync(HttpMethod method, long? id, Product? product, CancellationToken ct)
+    public async Task<bool> WriteProductAsync(HttpMethod method, long? id, Product? product, CancellationToken ct, bool writeImage = true)
     {
         var path = id is long productId ? $"{ProductsPath}?id=eq.{productId}" : ProductsPath;
         using var request = CreateRequest(method, path, "SecretKey");
         request.Headers.Add("Prefer", "return=representation");
         if (product is not null)
         {
-            request.Content = JsonContent.Create(new
+            var payload = JsonSerializer.SerializeToNode(new
             {
                 slug = product.Slug.Trim(), nombre = product.Nombre.Trim(), origen = product.Origen.Trim(),
                 proceso = product.Proceso.Trim(), puntaje_sca = product.PuntajeSca, notas = product.Notas,
                 presentacion = product.Presentacion.Trim(), precio_usd = product.PrecioUsd,
                 precio_crc = product.PrecioCrc, imagen = product.Imagen.Trim(), activo = product.Activo
-            });
+            })!.AsObject();
+            if (!writeImage) payload.Remove("imagen");
+            request.Content = JsonContent.Create(payload);
         }
         using var response = await client.SendAsync(request, ct);
         response.EnsureSuccessStatusCode();
@@ -108,6 +110,38 @@ public sealed class SupabaseAdmin(HttpClient client, IConfiguration configuratio
         using var response = await client.SendAsync(request, ct);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<long>(ct);
+    }
+
+    public async Task<string> UploadProductImageAsync(IFormFile file, CancellationToken ct)
+    {
+        if (file.Length is < 12 or > 5 * 1024 * 1024)
+            throw new InvalidDataException("Selecciona una imagen de hasta 5 MB.");
+
+        await using var stream = file.OpenReadStream();
+        var header = new byte[12];
+        await stream.ReadExactlyAsync(header, ct);
+        stream.Position = 0;
+
+        var (extension, mediaType) = header switch
+        {
+            [255, 216, 255, ..] => ("jpg", "image/jpeg"),
+            [137, 80, 78, 71, 13, 10, 26, 10, ..] => ("png", "image/png"),
+            [82, 73, 70, 70, _, _, _, _, 87, 69, 66, 80] => ("webp", "image/webp"),
+            _ => throw new InvalidDataException("Selecciona una imagen JPG, PNG o WebP.")
+        };
+
+        var path = $"cafes-imagenes/{Guid.NewGuid():N}.{extension}";
+        using var request = CreateRequest(HttpMethod.Post, $"storage/v1/object/{path}", "SecretKey");
+        using var form = new MultipartFormDataContent();
+        var content = new StreamContent(stream);
+        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+        form.Add(content, "file", $"cafe.{extension}");
+        request.Content = form;
+        using var response = await client.SendAsync(request, ct);
+        if (!response.IsSuccessStatusCode)
+            throw new InvalidDataException("No se pudo subir la foto. Verifica la configuración de Storage.");
+
+        return $"{configuration["Supabase:Url"]!.TrimEnd('/')}/storage/v1/object/public/{path}";
     }
 
     private HttpRequestMessage CreateRequest(HttpMethod method, string path, string keyName)

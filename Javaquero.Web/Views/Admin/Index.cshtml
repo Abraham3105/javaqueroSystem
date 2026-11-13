@@ -2,7 +2,7 @@
 <header class="admin-hero">
     <p class="admin-kicker">Área de administración</p>
     <h1>Panel de Javaquero</h1>
-    <p>Gestiona tu catálogo de cafés y las cuentas con acceso al panel.</p>
+    <p>Gestiona el catálogo, los precios, las cotizaciones y el acceso al panel.</p>
 </header>
 <div class="admin-grid">
     <a class="admin-tile" asp-controller="Products" asp-action="Index">
@@ -16,5 +16,17 @@
         <h2>Usuarios</h2>
         <p>Vincula cuentas y gestiona el acceso de los administradores.</p>
         <span class="tile-link">Gestionar usuarios <span aria-hidden="true">→</span></span>
+    </a>
+    <a class="admin-tile" asp-controller="Documents" asp-action="Index">
+        <span class="tile-number">03</span>
+        <h2>Precios</h2>
+        <p>Actualiza los precios por presentación y genera la lista en PDF.</p>
+        <span class="tile-link">Gestionar precios <span aria-hidden="true">→</span></span>
+    </a>
+    <a class="admin-tile" asp-controller="Documents" asp-action="Quotes">
+        <span class="tile-number">04</span>
+        <h2>Cotizaciones</h2>
+        <p>Crea una cotización o vuelve a descargar una del historial.</p>
+        <span class="tile-link">Ver cotizaciones <span aria-hidden="true">→</span></span>
     </a>
 </div>

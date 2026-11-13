@@ -17,6 +17,19 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
     {
         try
         {
+            return View(await LoadCatalogAsync(ct));
+        }
+        catch (HttpRequestException)
+        {
+            return View();
+        }
+    }
+
+    [HttpGet("Cotizaciones")]
+    public async Task<IActionResult> Quotes(CancellationToken ct)
+    {
+        try
+        {
             var data = await LoadCatalogAsync(ct);
             var quotes = await supabase.ReadDocumentsAsync<Quote[]>(
                 "JV_COTIZACION_TB?select=id,cliente,creado_en,total&order=id.desc&limit=50", ct);
@@ -24,7 +37,7 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
         }
         catch (HttpRequestException)
         {
-            return View(null);
+            return View();
         }
     }
 
@@ -66,7 +79,7 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
             items.Length != quantities.Length || items.Length is < 1 or > 50)
         {
             TempData["DocumentError"] = "Indica el cliente y agrega al menos un producto válido.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Quotes));
         }
 
         var lines = new List<object>();
@@ -77,7 +90,7 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
                 !int.TryParse(parts[1], out var grams) || quantities[i] is < 1 or > 999)
             {
                 TempData["DocumentError"] = "Revisa los productos y las cantidades.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Quotes));
             }
 
             lines.Add(new { producto_id = productId, gramos = grams, cantidad = quantities[i], posicion = i });
@@ -91,7 +104,7 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
         catch (HttpRequestException)
         {
             TempData["DocumentError"] = "No se pudo guardar la cotización. Revisa los precios y vuelve a intentar.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Quotes));
         }
     }
 
@@ -110,3 +123,4 @@ public sealed class DocumentsController(SupabaseAdmin supabase) : Controller
         return new(await products, await prices, []);
     }
 }
+
