@@ -7,8 +7,8 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #151311;
-    color: #e8e1dd;
+    background-color: #050505;
+    color: #f5efe3;
   }
 
   .pb-safe {
@@ -48,19 +48,86 @@
   gap: .35rem;
   min-height: 44px;
   padding: 0 .65rem;
-  border: 1px solid #f2ca5080;
+  border: 1px solid #d4af3780;
   border-radius: 999px;
-  color: #f2ca50;
+  color: #d4af37;
   font-size: clamp(.7rem, 2.8vw, .875rem);
   font-weight: 700;
   white-space: nowrap;
 }
 
 .public-admin-link .material-symbols-outlined { font-size: 1rem; }
-.public-admin-link:hover { background: #f2ca5020; }
+.public-admin-link:hover { background: #d4af3720; }
 .public-admin-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
 @media (max-width: 360px) {
   .public-header > div { padding-inline: .5rem; }
   .public-header img { display: none; }
+}
+
+.coffee-story {
+  background: #090909;
+  border-block: 1px solid #d4af3733;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 5vw, 3rem);
+  color: #c9beaa;
+}
+
+.story-wrap { max-width: 70rem; margin-inline: auto; }
+.story-intro, .story-chapters { display: grid; gap: clamp(1.5rem, 5vw, 4rem); }
+.story-intro { align-items: center; }
+.story-origin, .story-quote figcaption {
+  color: #d4af37;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.story-intro h2, .story-chapter h3, .story-quote blockquote {
+  font-family: "Playfair Display", Georgia, serif;
+  color: #f5efe3;
+}
+.story-intro h2 { font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1.04; margin: .65rem 0 1rem; }
+.story-intro h2 em { color: #d4af37; }
+.story-intro p:last-child { max-width: 54ch; font-size: 1.05rem; line-height: 1.75; }
+
+.story-quote {
+  margin: 0;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border-left: 2px solid #d4af37;
+  background: linear-gradient(125deg, #1b160c, #0d0d0d);
+}
+.story-quote blockquote { margin: 0 0 1rem; font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.4; }
+.story-chapters { margin-top: clamp(2rem, 6vw, 4rem); }
+.story-chapter { min-width: 0; border-top: 1px solid #d4af3755; padding-top: 1.15rem; }
+.story-chapter h3 { font-size: clamp(1.35rem, 3vw, 1.95rem); line-height: 1.25; margin-bottom: .85rem; }
+.story-chapter p { line-height: 1.8; }
+.story-chapter p + p { margin-top: .75rem; }
+
+.story-natural {
+  display: grid;
+  gap: clamp(1.4rem, 4vw, 3.5rem);
+  margin-top: clamp(2rem, 6vw, 4rem);
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+  border-block: 1px solid #d4af3755;
+}
+
+.story-natural h3 {
+  margin-bottom: 1rem;
+  color: #f5efe3;
+  font: 500 clamp(1.85rem, 4vw, 3rem)/1.12 "Playfair Display", Georgia, serif;
+}
+
+.story-natural-details { margin: 0; font-size: .875rem; }
+.story-natural-details div { display: grid; grid-template-columns: 4.5rem 1fr; gap: .75rem; padding-block: .28rem; }
+.story-natural-details dt { color: #d4af37; }
+.story-natural-details dd { margin: 0; color: #f5efe3; }
+.story-natural-copy { max-width: 65ch; line-height: 1.8; }
+.story-natural-copy p + p { margin-top: .85rem; }
+.story-natural + .story-chapters .story-chapter { border-top: 0; padding-top: 0; }
+
+@media (min-width: 800px) {
+  .story-natural { grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); }
+  .story-intro { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
+  .story-chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

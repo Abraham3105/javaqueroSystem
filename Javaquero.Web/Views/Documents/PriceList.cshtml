@@ -1,0 +1,31 @@
+@model DocumentData
+@{
+    Layout = "_DocumentLayout";
+    ViewData["Title"] = "Lista de precios";
+    var prices = Model.Prices.ToDictionary(price => (price.ProductoId, price.Gramos));
+}
+@if (ViewData["Harvest"] is string harvest && harvest.Length > 0)
+{
+    <p>Cosecha @harvest</p>
+}
+<div class="document-table">
+    <table>
+        <thead><tr><th scope="col">Café</th>@foreach (var grams in DocumentData.Sizes) { <th scope="col">@DocumentData.Size(grams)</th> }</tr></thead>
+        <tbody>
+            @foreach (var product in Model.Products.Where(product => DocumentData.Sizes.Any(grams => prices.ContainsKey((product.Id, grams)))))
+            {
+                <tr><th scope="row">@product.Nombre</th>
+                    @foreach (var grams in DocumentData.Sizes)
+                    {
+                        <td>@(prices.TryGetValue((product.Id, grams), out var price) ? DocumentData.Money(price.PrecioCrc) : "—")</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@if (!Model.Products.Any(product => Model.Prices.Any(price => price.ProductoId == product.Id)))
+{
+    <p>Todavía no hay precios para los cafés activos.</p>
+}
+<p>Precios en colones por bolsa.</p>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · Javaquero</title>
+    <link rel="stylesheet" href="/css/documents.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="document-actions" aria-label="Acciones">
+        <a asp-controller="Documents" asp-action="Index">Volver a Documentos</a>
+        <button type="button" onclick="window.print()">Guardar como PDF</button>
+    </nav>
+    <main class="document">
+        <header class="document-heading">
+            <img src="/img/logo.png" alt="" width="62" height="62" />
+            <div><p>Javaquero Specialty Coffee</p><h1>@ViewData["Title"]</h1></div>
+        </header>
+        @RenderBody()
+    </main>
+</body>
+</html>

@@ -25,6 +25,7 @@
                 <a class="@(controller == "Admin" ? "current" : "")" asp-controller="Admin" asp-action="Index">Resumen</a>
                 <a class="@(controller == "Products" ? "current" : "")" asp-controller="Products" asp-action="Index">Productos</a>
                 <a class="@(controller == "Users" ? "current" : "")" asp-controller="Users" asp-action="Index">Usuarios</a>
+                <a class="@(controller == "Documents" ? "current" : "")" asp-controller="Documents" asp-action="Index">Documentos</a>
             </nav>
             <form class="sidebar-footer" asp-controller="Admin" asp-action="Logout" method="post">
                 <button type="submit">Cerrar sesión</button>
