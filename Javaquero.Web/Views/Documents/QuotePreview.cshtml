@@ -1,0 +1,25 @@
+@model Quote
+@{
+    Layout = "_DocumentLayout";
+    ViewData["Title"] = "Cotización";
+    var date = Model.CreadoEn.ToOffset(TimeSpan.FromHours(-6));
+}
+<div class="document-meta">
+    <p><strong>Cliente</strong> @Model.Cliente</p>
+    <p><strong>N.º</strong> @Model.Id.ToString("D7") · @date.ToString("dd/MM/yyyy")</p>
+</div>
+<div class="document-table">
+    <table>
+        <thead><tr><th scope="col">Café</th><th scope="col">Cantidad</th><th scope="col">Precio unitario</th><th scope="col">Subtotal</th></tr></thead>
+        <tbody>
+            @foreach (var line in Model.Lineas ?? [])
+            {
+                <tr>
+                    <th scope="row">@line.Nombre <small>@DocumentData.Size(line.Gramos)</small></th>
+                    <td>@line.Cantidad</td><td>@DocumentData.Money(line.PrecioCrc)</td><td>@DocumentData.Money(line.Subtotal)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p class="document-total">Total <strong>@DocumentData.Money(Model.Total)</strong></p>

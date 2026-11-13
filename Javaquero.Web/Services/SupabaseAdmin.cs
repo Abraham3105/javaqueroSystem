@@ -83,6 +83,33 @@ public sealed class SupabaseAdmin(HttpClient client, IConfiguration configuratio
         return json!.RootElement.GetArrayLength() == 1;
     }
 
+    public async Task<T> ReadDocumentsAsync<T>(string path, CancellationToken ct)
+    {
+        using var request = CreateRequest(HttpMethod.Get, $"rest/v1/{path}", "SecretKey");
+        using var response = await client.SendAsync(request, ct);
+        response.EnsureSuccessStatusCode();
+        return (await response.Content.ReadFromJsonAsync<T>(ct))!;
+    }
+
+    public async Task SavePresentationPriceAsync(PresentationPrice price, CancellationToken ct)
+    {
+        using var request = CreateRequest(HttpMethod.Post,
+            "rest/v1/JV_PRODUCTO_PRECIO_TB?on_conflict=producto_id,gramos", "SecretKey");
+        request.Headers.Add("Prefer", "resolution=merge-duplicates");
+        request.Content = JsonContent.Create(price);
+        using var response = await client.SendAsync(request, ct);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<long> CreateQuoteAsync(Guid requestId, string customer, object lines, CancellationToken ct)
+    {
+        using var request = CreateRequest(HttpMethod.Post, "rest/v1/rpc/jv_crear_cotizacion", "SecretKey");
+        request.Content = JsonContent.Create(new { p_solicitud = requestId, p_cliente = customer, p_lineas = lines });
+        using var response = await client.SendAsync(request, ct);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<long>(ct);
+    }
+
     private HttpRequestMessage CreateRequest(HttpMethod method, string path, string keyName)
     {
         var url = configuration["Supabase:Url"];

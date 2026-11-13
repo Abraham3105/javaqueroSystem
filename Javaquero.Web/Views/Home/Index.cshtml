@@ -4,6 +4,7 @@
 <html class="dark" lang="es">
 <head>
 <meta charset="utf-8"/>
+<meta name="theme-color" content="#050505"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Javaquero — Café de Especialidad</title>
 <link rel="icon" href="/favicon.ico"/>
@@ -14,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="/css/style.css" rel="stylesheet" asp-append-version="true"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="/js/tailwind-config.js"></script>
+<script src="/js/tailwind-config.js" asp-append-version="true"></script>
 </head>
 <body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen">
 
@@ -23,7 +24,7 @@
     <div class="flex items-center gap-space-xs">
       <img alt="Javaquero" class="w-8 h-8 rounded-full object-cover bg-surface-container-lowest" src="/img/logo.png"/>
       <div class="flex flex-col">
-        <span class="font-headline-sm text-headline-sm tracking-wide text-primary uppercase leading-tight">Javaquero</span>
+        <span class="font-headline-sm text-headline-sm tracking-wide text-primary uppercase leading-tight">Javaquero<sup class="ml-0.5 text-[0.5em]">&reg;</sup></span>
         <span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant uppercase lg:hidden" id="header-subtitle">Inicio</span>
       </div>
     </div>
@@ -46,7 +47,7 @@
   <!-- HERO SECTION -->
   <section class="relative w-full public-hero overflow-hidden" id="inicio">
     <img alt="JAVAQUERO Espresso artesanal con crema dorada" class="absolute inset-0 w-full h-full object-cover object-center" src="/img/hero-espresso.jpg"/>
-    <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/70 to-surface/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/75 to-surface/30"></div>
     <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative z-10 w-full px-space-md pt-space-xl pb-space-2xl md:px-space-xl md:pb-space-3xl md:max-w-6xl md:mx-auto flex flex-col items-center justify-end text-center md:items-start md:text-left">
@@ -58,7 +59,7 @@
       </p>
 
       <div class="w-full flex flex-col gap-space-sm max-w-xs">
-        <a class="w-full py-3.5 px-space-md rounded-full bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_24px_rgba(242,202,80,0.3)] active:scale-98 transition-all" href="#cafes">
+        <a class="w-full py-3.5 px-space-md rounded-full bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_24px_rgba(212,175,55,0.3)] active:scale-98 transition-all" href="#cafes">
           <span>Ver Cafés Disponibles</span>
           <span class="material-symbols-outlined text-lg">arrow_downward</span>
         </a>
@@ -112,77 +113,60 @@
     }
   </section>
 
-  <!-- SECTION: SOBRE NOSOTROS (#nosotros) -->
-  <section class="px-space-md py-space-2xl bg-surface-container-low flex flex-col scroll-mt-20" id="nosotros">
-   <div class="w-full md:max-w-6xl md:mx-auto md:grid md:grid-cols-2 md:gap-space-2xl md:items-start">
-    <div>
-    <div class="flex flex-col items-start mb-space-lg">
-      <div class="flex items-center gap-space-2xs mb-space-2xs">
-        <span class="material-symbols-outlined text-primary text-sm">history_edu</span>
-        <span class="font-label-md text-label-md uppercase tracking-widest text-primary">Nuestra Esencia</span>
-      </div>
-      <h2 class="font-headline-sm text-headline-sm md:font-headline-md md:text-headline-md text-on-surface font-semibold">
-        La Historia de JAVAQUERO
-      </h2>
-    </div>
+  <section class="coffee-story scroll-mt-20" id="nosotros" aria-labelledby="historia-titulo">
+    <div class="story-wrap">
+      <header class="story-intro">
+        <div>
+          <p class="story-origin">Santa María de Dota · Costa Rica</p>
+          <h2 id="historia-titulo">La historia de <em>Javaquero</em></h2>
+          <p>En Santa María de Dota, Carlos aprendió a recoger café con su familia. Hoy, con Javaquero, quiere que una taza lleve hasta otras mesas el sabor de su pueblo y el trabajo de quienes lo cultivan.</p>
+        </div>
+        <figure class="story-quote">
+          <blockquote>«Haber nacido en Santa María de Dota, realmente es una bendición para mí.»</blockquote>
+          <figcaption>Carlos, fundador de Javaquero</figcaption>
+        </figure>
+      </header>
 
-    <div class="flex flex-col gap-space-lg text-on-surface-variant font-body-md text-body-md leading-relaxed mb-space-xl md:mb-0">
-      <p>
-        <span class="text-on-surface font-semibold">Javaquero</span> es un café de especialidad cultivado en <span class="text-on-surface font-semibold">Santa María de Dota, Costa Rica, a 1900 msnm</span>. Su nombre hace honor a los productores y recolectores que con su incansable labor permiten producir <span class="text-on-surface font-semibold">un café de muy alta calidad</span> donde predominan las <span class="text-on-surface font-semibold">notas limpias, buen cuerpo y sabor balanceado</span>.
-      </p>
-
-      <p class="font-headline-sm text-headline-sm text-primary italic font-medium border-l-2 border-primary/40 pl-space-md">
-        Un café con identidad, alta trazabilidad y origen claro.
-      </p>
-
-      <p>
-        Javaquero une dos mundos que, aunque distintos, comparten una misma raíz: la tierra, el trabajo duro y la libertad.
-      </p>
-
-      <div class="flex items-center gap-space-sm py-space-2xs" aria-hidden="true">
-        <span class="h-px flex-1 bg-primary/25"></span>
-        <span class="material-symbols-outlined text-primary text-lg">eco</span>
-        <span class="h-px flex-1 bg-primary/25"></span>
+      <div class="story-chapters">
+        <article class="story-chapter">
+          <h3>Una infancia entre cafetales</h3>
+          <p>Para Carlos, nacer en Santa María de Dota fue una bendición. Ahí aprendió el valor del respeto y del trabajo, entre montañas y gente que disfruta lo que hace. Sus recuerdos más queridos son de la infancia, cuando salía a recolectar café con su familia, almorzaban en el cafetal y vacilaban entre ellos. De quienes ya fallecieron conserva las enseñanzas y el cariño de esos días.</p>
+          <p>Sus abuelos maternos y paternos y su papá le transmitieron el amor por el grano de oro. Los recuerda trabajando en las fincas junto a los peones agrícolas, abonando, deshijando las matas para que crecieran con más fuerza y recogiendo las cerezas. También recuerda medir el café antes de llevarlo a la cooperativa.</p>
+        </article>
+        <article class="story-chapter">
+          <h3>Cómo nació Javaquero</h3>
+          <p>Carlos creó Javaquero al interesarse por nuevas prácticas cafetaleras. Quería vivir de lo que le gusta y dar a conocer el café de especialidad de Dota en lugares donde todavía es poco conocido.</p>
+          <p><strong class="text-on-surface">Java</strong> alude a la isla de Indonesia ligada a la historia del café arábica. <strong class="text-on-surface">Quero</strong> evoca a los finqueros, cafetaleros y ganaderos. Carlos reunió esas dos referencias en un nombre inventado que reconoce a la gente que trabaja la tierra.</p>
+        </article>
       </div>
 
-      <div class="flex flex-col gap-space-sm">
-        <div class="p-space-md rounded-xl bg-surface-container border border-primary/10">
-          <span class="font-headline-sm text-headline-sm text-primary italic">“Java”</span>
-          <p class="mt-1">Una palabra histórica para referirse al café. Nació del vínculo con la isla de Java, en Indonesia, una de las primeras regiones del mundo en cultivar café para exportación. Con el tiempo, se volvió sinónimo de esta bebida que mueve culturas y despierta almas.</p>
+      <article class="story-natural" aria-labelledby="natural-titulo">
+        <header>
+          <h3 id="natural-titulo">Javaquero Natural</h3>
+          <dl class="story-natural-details">
+            <div><dt>Variedad</dt><dd>Catuaí</dd></div>
+            <div><dt>Altura</dt><dd>1.950–2.100 m s. n. m.</dd></div>
+            <div><dt>Cosecha</dt><dd>Noviembre a marzo</dd></div>
+          </dl>
+        </header>
+        <div class="story-natural-copy">
+          <p>El Catuaí de proceso natural que Carlos cultiva en Santa María de Dota recuerda al mango maduro y a los frutos rojos, con notas de chocolate y un toque de vino afrutado. En boca tiene una acidez cítrica de media a alta, cuerpo medio y textura cremosa.</p>
+          <p>Tras la recolección, las cerezas pasan a camas de secado. Carlos describe un reposo de dos a tres meses antes de continuar con el procesamiento, el almacenamiento y el tueste.</p>
         </div>
-        <div class="p-space-md rounded-xl bg-surface-container border border-primary/10">
-          <span class="font-headline-sm text-headline-sm text-primary italic">“Vaquero”</span>
-          <p class="mt-1">Representa al hombre del campo: libre, resistente, curtido por el sol y el barro, formado en jornadas largas y guiado por propósito.</p>
-        </div>
-      </div>
+      </article>
 
-      <p class="text-center font-headline-sm text-headline-sm text-on-surface font-semibold pt-space-sm">
-        De esa unión nace <span class="text-primary uppercase tracking-wide">Javaquero</span>.
-      </p>
-    </div>
-    </div>
-
-    <div class="flex flex-col gap-space-sm">
-      <div class="p-space-md rounded-xl bg-surface-container flex items-start gap-space-sm shadow-sm">
-        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-          <span class="material-symbols-outlined text-primary text-xl">handshake</span>
-        </div>
-        <div class="flex flex-col">
-          <h4 class="font-title-md text-title-md text-on-surface font-semibold">Comercio Directo y Justo</h4>
-          <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Relaciones transparentes con familias caficultoras. Cero intermediarios abusivos.</p>
-        </div>
-      </div>
-      <div class="p-space-md rounded-xl bg-surface-container flex items-start gap-space-sm shadow-sm">
-        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-          <span class="material-symbols-outlined text-primary text-xl">local_shipping</span>
-        </div>
-        <div class="flex flex-col">
-          <h4 class="font-title-md text-title-md text-on-surface font-semibold">Envíos Exprés Garantizados</h4>
-          <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Embalaje al vacío con válvula desgasificadora. Enviado en 24h tras el reposo óptimo del grano.</p>
-        </div>
+      <div class="story-chapters story-closing">
+        <article class="story-chapter">
+          <h3>De Dota a otras mesas</h3>
+          <p>Proteger el fruto de las plagas y cubrir el costo de los insumos y nutrientes son dos de los retos de producir este café. A Carlos le enorgullece que ese esfuerzo llegue a la mesa de alguien que quizá nunca ha visto un cafetal.</p>
+          <p>Cuando alguien en Estados Unidos pruebe Javaquero, Carlos quiere que reconozca el trabajo y el cariño de las familias caficultoras de Dota. Y si esa taza le despierta curiosidad, lo invita a conocer las montañas, ver de cerca las cerezas y visitar los microbeneficios y las cafeterías para recorrer el camino del café hasta la taza.</p>
+        </article>
+        <article class="story-chapter">
+          <h3>La vida alrededor del café</h3>
+          <p>En Dota, el día empieza temprano con una taza de café chorreado antes de salir a la finca. Al volver, hay tiempo para compartir con los vecinos. Cuando Carlos está lejos, extraña el olor a tierra mojada, los cafetales y la gente del pueblo. A quien visite Dota también le recomienda probar su comida casera, acercarse a las fiestas con boyeros y desfiles de emblemas, y visitar un trapiche.</p>
+        </article>
       </div>
     </div>
-   </div>
   </section>
 
   <!-- SECTION: CONTACTO & CONCIERGE (#contacto) -->
@@ -224,7 +208,7 @@
       </div>
     </div>
 
-    <a class="w-full py-4 px-space-md rounded-2xl bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_20px_rgba(242,202,80,0.3)] active:scale-98 transition-all" data-wa-message="Hola Javaquero, quiero comprar café de tueste medio" href="#" rel="noopener noreferrer" target="_blank">
+    <a class="w-full py-4 px-space-md rounded-2xl bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-space-xs shadow-[0_0_20px_rgba(212,175,55,0.3)] active:scale-98 transition-all" data-wa-message="Hola Javaquero, quiero comprar café de tueste medio" href="#" rel="noopener noreferrer" target="_blank">
       <span class="material-symbols-outlined text-xl">forum</span>
       <span>Escríbenos por WhatsApp</span>
     </a>
