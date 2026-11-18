@@ -1,0 +1,12 @@
+{
+  "name": "javaquerosystem",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./cloudflare-dist"
+  },
+  "build": {
+    "command": "node cloudflare/build.mjs"
+  },
+  "previews": {}
+}
